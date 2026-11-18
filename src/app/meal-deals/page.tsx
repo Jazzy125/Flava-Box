@@ -1,0 +1,10 @@
+import type { Metadata } from 'next';
+import { PackageOpen, SlidersHorizontal, ShoppingBag } from 'lucide-react';
+import { getMenu } from '@/lib/catalog';
+import { boxIds } from '@/data/menu';
+import { BoxCards, OfferBanner } from '@/components/Boxes';
+import { Kicker } from '@/components/Brand';
+import PageIntro from '@/components/PageIntro';
+export const dynamic = 'force-dynamic';
+export const metadata: Metadata = { title: 'Meal Deals & Build Your Box', description: 'Build your Classic Box, Combo Box or Combo Large at Flava Box Luton. Choose your mains, sides and flavours, plus free local delivery on orders above £35.', alternates: { canonical: '/meal-deals' }, openGraph: { title: 'Build Your Box | Flava Box Luton', images: ['/images/flava-box.webp'] } };
+export default async function DealsPage() { const all = await getMenu(); const boxes = boxIds.flatMap(id => all.filter(f => f.id === id)); return <><PageIntro page="Meal Deals" label="THE COMBO COLLECTION" title="MORE IN YOUR BOX." description="Three boxes. Your choice of favourites. Pick your starting point and make it yours." image="flava-box"/><section className="section deals-list"><div className="wrap"><Kicker>MEAL DEALS</Kicker><div className="section-head"><h2>THE BOX LINE-UP.</h2><p>Choose your box. Then choose your flava.</p></div><BoxCards foods={boxes}/><p className="box-footnote">The same option cannot be selected twice. All boxes include garlic bread and corn on the cob.</p></div></section><section className="how-box"><div className="wrap"><div><PackageOpen/><span>01</span><h3>PICK A BOX.</h3><p>Classic, Combo or Combo Large. Start with the size that suits your cravings.</p></div><div><SlidersHorizontal/><span>02</span><h3>MAKE IT YOURS.</h3><p>Choose the starters, mains, sides and flavours included in your box.</p></div><div><ShoppingBag/><span>03</span><h3>SEND YOUR ENQUIRY.</h3><p>Choose collection or delivery. The team will confirm availability and the final total.</p></div></div></section><OfferBanner/></>; }
